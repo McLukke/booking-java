@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'eclipse'
 
 group = 'ca.funfactory'
 version = '0.0.1-SNAPSHOT'
