@@ -14,5 +14,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		@ComponentScan("ca.funfactory.booking.app.signon.config.service")
 })
 public class AppConfig {
-	public LocalSessionFactoryBean getSession
+//	public LocalSessionFactoryBean getSession
 }
