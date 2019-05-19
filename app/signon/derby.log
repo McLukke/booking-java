@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon May 13 18:25:52 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016a-b34d-5c56-0000026229e0 
+on database directory memory:/Users/mclukke/work/booking-java/app/signon/testdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/Users/mclukke/.gradle/caches/modules-2/files-2.1/org.apache.derby/derby/10.14.2.0/7efad40ef52fbb1f08142f07a83b42d29e47d8ce/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=12+33
+user.dir=/Users/mclukke/work/booking-java/app/signon
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.14.4
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
