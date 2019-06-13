@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
 @Configuration
@@ -23,14 +23,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource(value = "jpaConfig.properties", ignoreResourceNotFound = true)//TODO your jpaConfig properties, you can put that in the resource folder for now
 public class JpaConfiguration {
-
-
 	private static final String DATABASE_PLATFORM_PROPERTY_KEY = "databasePlatform";
 	private static final String JTA_PLATFORM_PROPERTY_KEY = "jtaPlatform";
 	private static final String SHOW_SQL_PROPERTY_KEY = "showSql";
 	private static final String DATASOURCE_NAME_PROPERTY_KEY = "datasourceName";
 	private static final String PACKAGES_TO_SCAN_PROPERTY_KEY = "packagesToScan";
 	private static final String LAZY_LOAD_NO_TRAN_PROPERTY_KEY = "lazyLoadNoTran";
+	private static final String JDBC_DRIVER_KEY = "jdbc.driver";
+	private static final String JDBC_URL_KEY = "jdbc.url";
+	private static final String JDBC_USER_KEY = "jdbc.user";
+	private static final String JDBC_PASSWORD_KEY = "jdbc.password";
+	
+
 	@Autowired
 	private Environment environment;
 
@@ -46,11 +50,15 @@ public class JpaConfiguration {
 	}
 
 	@Bean
-	public DataSource dataSource() {
-		String jndiName = getEnvironment().getProperty(DATASOURCE_NAME_PROPERTY_KEY);
-		JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
-		dsLookup.setResourceRef(true);
-		return dsLookup.getDataSource(jndiName);
+	public DataSource dataSource(){
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+	    dataSource.setDriverClassName(environment.getProperty(JDBC_DRIVER_KEY));
+	    dataSource.setUrl(environment.getProperty(JDBC_URL_KEY));
+	    dataSource.setUsername(environment.getProperty(JDBC_USER_KEY));
+	    dataSource.setPassword(environment.getProperty(JDBC_PASSWORD_KEY));
+
+	    return dataSource;
 	}
 
 	@Bean
@@ -70,8 +78,8 @@ public class JpaConfiguration {
 	@Bean
 	public Properties jpaProperties() {
 		Properties properties = new Properties();
-		properties.setProperty(org.hibernate.cfg.Environment.JTA_PLATFORM,
-				getEnvironment().getProperty(JTA_PLATFORM_PROPERTY_KEY));
+//		properties.setProperty(org.hibernate.cfg.Environment.JTA_PLATFORM,
+//				getEnvironment().getProperty(JTA_PLATFORM_PROPERTY_KEY));
 		properties.setProperty(org.hibernate.cfg.Environment.DIALECT,
 				getEnvironment().getProperty(DATABASE_PLATFORM_PROPERTY_KEY));
 		properties.setProperty(org.hibernate.cfg.Environment.SHOW_SQL,
